@@ -7,15 +7,20 @@ pipeline {
         ARM_TENANT_ID = credentials('ARM_TENANT_ID')
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
     }
-
     stages {
-        stage('Terraform Init') {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/pranavkumarpk01/TERRAFORM.git'
+            }
+        }
+        
+    stage('Terraform Init') {
             steps {
                 sh 'terraform init'
             }
         }
 
-stage('Terraform Plan') {
+   stage('Terraform Plan') {
             steps {
                 script {
                     sh 'terraform plan -out=tfplan'
@@ -24,7 +29,7 @@ stage('Terraform Plan') {
         }
 
       
-stage('Review Terraform Plan') {
+    stage('Review Terraform Plan') {
             steps {
                 script {
                     def planOutput = sh(script: 'terraform show -no-color tfplan', returnStdout: true).trim()
