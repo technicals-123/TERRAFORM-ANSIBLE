@@ -68,7 +68,7 @@ resource "null_resource" "run_ansible_playbook" {
 
   # Use local-exec to run Ansible locally
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${azurerm_public_ip.demopublicip.ip_address},' nginx.yml --extra-vars='ansible_ssh_user=*****' --extra-vars='ansible_ssh_pass=*******' --become --become-user=root"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${azurerm_public_ip.demopublicip.ip_address},' nginx.yml --extra-vars='ansible_ssh_user=trainer' --extra-vars='ansible_ssh_pass=Godisgreat01' --become --become-user=root"
   }
 }
 
