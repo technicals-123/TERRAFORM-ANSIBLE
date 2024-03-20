@@ -14,13 +14,13 @@ pipeline {
             }
         }
         
-    stage('Terraform Init') {
+        stage('Terraform Init') {
             steps {
                 sh 'terraform init'
             }
         }
 
-   stage('Terraform Plan') {
+        stage('Terraform Plan') {
             steps {
                 script {
                     sh 'terraform plan -out=tfplan'
@@ -29,7 +29,7 @@ pipeline {
         }
 
       
-    stage('Review Terraform Plan') {
+        stage('Review Terraform Plan') {
             steps {
                 script {
                     def planOutput = sh(script: 'terraform show -no-color tfplan', returnStdout: true).trim()
@@ -60,4 +60,4 @@ pipeline {
             }
         }
     }
-} 
+}
