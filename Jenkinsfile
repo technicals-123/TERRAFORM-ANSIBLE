@@ -6,6 +6,8 @@ pipeline {
         ARM_CLIENT_SECRET = credentials('ARM_CLIENT_SECRET')
         ARM_TENANT_ID = credentials('ARM_TENANT_ID')
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
+
+        TF_PLUGIN_SKIP_PROVIDER_REGISTRATION ='true'
     }
     stages {
        stage('Checkout') {
