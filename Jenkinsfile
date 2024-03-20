@@ -14,14 +14,16 @@ pipeline {
             }
         }
 
-        stage('Terraform Init') {
-            steps {
-                script {
-                    // Run terraform init
-                    sh 'terraform init'
-                }
+       stage('Terraform Init') {
+    steps {
+        script {
+            // Run terraform init in the workspace directory
+            dir('/var/lib/jenkins/workspace/TERRAFORM') {
+                sh 'terraform init'
             }
         }
+    }
+}
 
         stage('Terraform Apply') {
             steps {
