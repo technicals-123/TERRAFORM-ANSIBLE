@@ -23,22 +23,35 @@ stage('Terraform Plan') {
             }
         }
 
-        stage('Terraform Apply') {
+      
+stage('Review Terraform Plan') {
             steps {
                 script {
-                    // Apply Terraform configuration
-                    sh 'terraform apply -auto-approve'
+                    def planOutput = sh(script: 'terraform show -no-color tfplan', returnStdout: true).trim()
+                    echo "Terraform Plan Output:"
+                    echo planOutput
+                    input message: "Review the plan before proceeding",
+                          parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: planOutput)]
+                }
+            }
+        }
+
+        stage('Apply Terraform Plan') {
+            steps {
+                script {
+                    sh 'terraform apply tfplan'
+                }
+            }
+        }
+
+        stage('Destroy Infrastructure') {
+            steps {
+                script {
+                    input message: "Are you sure you want to destroy the infrastructure?",
+                          ok: "Destroy",
+                          parameters: [choice(name: 'Confirmation', choices: 'Destroy')]
+                    sh 'terraform destroy -auto-approve'
                 }
             }
         }
     }
-    
-    post {
-        always {
-            script {
-                // Always destroy infrastructure after job execution
-                sh 'terraform destroy -auto-approve'
-            }
-        }
-    }
-}
