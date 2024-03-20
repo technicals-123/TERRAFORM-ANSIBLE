@@ -7,11 +7,13 @@ terraform {
     }
     # Add other providers if needed
   }
-  provider_installation {
-    # Skip provider registration
-    skip_provider_registration = true
-  }
 }
+
+provider_installation {
+  # Skip provider registration
+  skip_provider_registration = true
+}
+
 provider "azurerm" {
   features {}
 }
