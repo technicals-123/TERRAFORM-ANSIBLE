@@ -8,11 +8,11 @@ pipeline {
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
     }
     stages {
-        stage('Checkout') {
+       stage('Checkout') {
             steps {
-                git https://github.com/pranavkumarpk01/TERRAFORM.git
-            }
-        }
+                    git branch: 'main', url: 'https://github.com/pranavkumarpk01/TERRAFORM.git'
+                 }
+          }
         
         stage('Terraform Init') {
             steps {
