@@ -1,23 +1,27 @@
 pipeline {
     agent any
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/pranavkumarpk01/TERRAFORM.git'
-            }
-        }
 
-       stage('Terraform Init') {
-    steps {
-        script {
-            // Run terraform init in the workspace directory
-            dir('/var/lib/jenkins/workspace/TERRAFORM') {
+    environment {
+        ARM_CLIENT_ID = credentials('ARM_CLIENT_ID')
+        ARM_CLIENT_SECRET = credentials('ARM_CLIENT_SECRET')
+        ARM_TENANT_ID = credentials('ARM_TENANT_ID')
+        ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
+    }
+
+    stages {
+        stage('Terraform Init') {
+            steps {
                 sh 'terraform init'
             }
         }
-    }
-}
+
+stage('Terraform Plan') {
+            steps {
+                script {
+                    sh 'terraform plan -out=tfplan'
+                }
+            }
+        }
 
         stage('Terraform Apply') {
             steps {
