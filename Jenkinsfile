@@ -7,27 +7,37 @@ pipeline {
         ARM_TENANT_ID = credentials('ARM_TENANT_ID')
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
     }
-  stages {
+    stages {
         stage('Checkout') {
             steps {
                 git 'https://github.com/pranavkumarpk01/TERRAFORM.git'
             }
         }
-        
-     stage('Terraform Apply') {
-    steps {
-        script {
-            sh 'terraform init'
-            sh 'terraform apply -auto-approve'
+
+        stage('Terraform Init') {
+            steps {
+                script {
+                    // Run terraform init
+                    sh 'terraform init'
+                }
+            }
         }
-    }
-}
+
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    // Apply Terraform configuration
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
     }
     
     post {
         always {
             script {
-                sh 'terraform destroy -auto-approve' // Destroy infrastructure after job execution
+                // Always destroy infrastructure after job execution
+                sh 'terraform destroy -auto-approve'
             }
         }
     }
