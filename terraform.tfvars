@@ -1,4 +1,4 @@
 resource_group_name     = "rg01"
 resource_group_location = "South India"
-username                = "*****"
-password                = "****"
+username                = "saumya"
+password                = "Saumya123"
