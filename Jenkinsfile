@@ -10,11 +10,7 @@ pipeline {
         TF_PLUGIN_SKIP_PROVIDER_REGISTRATION ='true'
     }
     stages {
-       // stage('Checkout') {
-       //      steps {
-       //              git branch: 'main', url: 'https://github.com/pranavkumarpk01/TERRAFORM.git'
-       //           }
-       //    }
+      
         
         stage('Terraform Init') {
             steps {
